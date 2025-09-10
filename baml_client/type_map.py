@@ -25,6 +25,12 @@ type_map = {
     "types.FinalAnswer": types.FinalAnswer,
     "stream_types.FinalAnswer": stream_types.FinalAnswer,
 
+    "types.MarketSentiment": types.MarketSentiment,
+    "stream_types.MarketSentiment": stream_types.MarketSentiment,
+
+    "types.MarketSentimentEntity": types.MarketSentimentEntity,
+    "stream_types.MarketSentimentEntity": stream_types.MarketSentimentEntity,
+
     "types.Person": types.Person,
     "stream_types.Person": stream_types.Person,
 

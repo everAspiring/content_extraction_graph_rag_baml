@@ -41,7 +41,7 @@ def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
 # #########################################################################
 
 # #########################################################################
-# Generated classes (7)
+# Generated classes (9)
 # #########################################################################
 
 class CypherQuery(BaseModel):
@@ -55,6 +55,14 @@ class Experience(BaseModel):
 
 class FinalAnswer(BaseModel):
     answer: str
+
+class MarketSentiment(BaseModel):
+    company_name: str
+    sector: str
+    sentiment: str
+
+class MarketSentimentEntity(BaseModel):
+    entities: typing.List["MarketSentiment"]
 
 class Person(BaseModel):
     first: str

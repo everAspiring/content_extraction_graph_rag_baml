@@ -34,6 +34,12 @@ class LlmResponseParser:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="request")
         return typing.cast(types.Resume, result)
 
+    def ExtractSentiment(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> types.MarketSentimentEntity:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractSentiment", llm_response=llm_response, mode="request")
+        return typing.cast(types.MarketSentimentEntity, result)
+
     def GenerateCypher(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> types.CypherQuery:
@@ -65,6 +71,12 @@ class LlmStreamParser:
     ) -> stream_types.Resume:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="stream")
         return typing.cast(stream_types.Resume, result)
+
+    def ExtractSentiment(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> stream_types.MarketSentimentEntity:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractSentiment", llm_response=llm_response, mode="stream")
+        return typing.cast(stream_types.MarketSentimentEntity, result)
 
     def GenerateCypher(
         self, llm_response: str, baml_options: BamlCallOptions = {},

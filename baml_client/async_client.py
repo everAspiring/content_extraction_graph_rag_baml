@@ -87,6 +87,13 @@ class BamlAsyncClient:
             "resume": resume,"question": question,
         })
         return typing.cast(types.Resume, result.cast_to(types, types, stream_types, False, __runtime__))
+    async def ExtractSentiment(self, article: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.MarketSentimentEntity:
+        result = await self.__options.merge_options(baml_options).call_function_async(function_name="ExtractSentiment", args={
+            "article": article,
+        })
+        return typing.cast(types.MarketSentimentEntity, result.cast_to(types, types, stream_types, False, __runtime__))
     async def GenerateCypher(self, question: str,
         baml_options: BamlCallOptions = {},
     ) -> types.CypherQuery:
@@ -132,6 +139,18 @@ class BamlStreamClient:
           result,
           lambda x: typing.cast(stream_types.Resume, x.cast_to(types, types, stream_types, True, __runtime__)),
           lambda x: typing.cast(types.Resume, x.cast_to(types, types, stream_types, False, __runtime__)),
+          ctx,
+        )
+    def ExtractSentiment(self, article: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[stream_types.MarketSentimentEntity, types.MarketSentimentEntity]:
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="ExtractSentiment", args={
+            "article": article,
+        })
+        return baml_py.BamlStream[stream_types.MarketSentimentEntity, types.MarketSentimentEntity](
+          result,
+          lambda x: typing.cast(stream_types.MarketSentimentEntity, x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(types.MarketSentimentEntity, x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
     def GenerateCypher(self, question: str,
@@ -180,6 +199,13 @@ class BamlHttpRequestClient:
             "resume": resume,"question": question,
         }, mode="request")
         return result
+    async def ExtractSentiment(self, article: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ExtractSentiment", args={
+            "article": article,
+        }, mode="request")
+        return result
     async def GenerateCypher(self, question: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
@@ -214,6 +240,13 @@ class BamlHttpStreamRequestClient:
     ) -> baml_py.baml_py.HTTPRequest:
         result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ExtractResume", args={
             "resume": resume,"question": question,
+        }, mode="stream")
+        return result
+    async def ExtractSentiment(self, article: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ExtractSentiment", args={
+            "article": article,
         }, mode="stream")
         return result
     async def GenerateCypher(self, question: str,

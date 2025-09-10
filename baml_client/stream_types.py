@@ -23,7 +23,7 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
 # #########################################################################
-# Generated classes (7)
+# Generated classes (9)
 # #########################################################################
 
 class CypherQuery(BaseModel):
@@ -37,6 +37,14 @@ class Experience(BaseModel):
 
 class FinalAnswer(BaseModel):
     answer: typing.Optional[str] = None
+
+class MarketSentiment(BaseModel):
+    company_name: typing.Optional[str] = None
+    sector: typing.Optional[str] = None
+    sentiment: typing.Optional[str] = None
+
+class MarketSentimentEntity(BaseModel):
+    entities: typing.List["MarketSentiment"]
 
 class Person(BaseModel):
     first: typing.Optional[str] = None
