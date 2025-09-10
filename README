@@ -30,20 +30,8 @@ export GOOGLE_API_KEY="your-gemini-api-key"
 ```
 Or add it in your `.env` file (if you use one).
 
-### 5(Optional) Install the BAML VS Code Extension
 
-Go to the Extensions tab in VS Code.
-Search for "BAML" and install the official extension.
-This enables auto-generation of Python client code from your .baml files.
-Set Up Your API Key
-Export your Gemini API key (or other LLM provider key) as an environment variable:
-
-(Optional) Generate Client Code
-
-Save your .baml files in VS Code to trigger client code generation.
-The generated code will appear in the baml_client/ folder.
-
-### 6. **(Optional) Generate BAML Client Code**
+### 5. **(Optional) Generate BAML Client Code**
 If you modify `.baml` files, save them in VS Code with the BAML extension installed to auto-generate/update the Python client in `baml_client/`.
 
 ---
