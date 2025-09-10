@@ -1,0 +1,97 @@
+# Market Sentiment Extraction with BAML
+
+This project demonstrates how to use [BAML](https://github.com/boundaryml/baml) to extract company names, sectors, and market sentiment from financial articles using LLMs (e.g., Gemini).
+
+---
+
+## 🚀 Setup & Installation
+
+### 1. **Clone the Repository**
+```bash
+git clone <your-repo-url>
+cd <your-repo-directory>
+```
+
+### 2. **Create and Activate a Virtual Environment**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. **Install Python Dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+### 4. **Set Up Your Gemini API Key**
+Export your Gemini API key as an environment variable:
+```bash
+export GOOGLE_API_KEY="your-gemini-api-key"
+```
+Or add it in your `.env` file (if you use one).
+
+### 5(Optional) Install the BAML VS Code Extension
+
+Go to the Extensions tab in VS Code.
+Search for "BAML" and install the official extension.
+This enables auto-generation of Python client code from your .baml files.
+Set Up Your API Key
+Export your Gemini API key (or other LLM provider key) as an environment variable:
+
+(Optional) Generate Client Code
+
+Save your .baml files in VS Code to trigger client code generation.
+The generated code will appear in the baml_client/ folder.
+
+### 6. **(Optional) Generate BAML Client Code**
+If you modify `.baml` files, save them in VS Code with the BAML extension installed to auto-generate/update the Python client in `baml_client/`.
+
+---
+
+## 🧑‍💻 Usage
+
+Run the test script to extract market sentiment from an example article:
+
+```bash
+python baml_src/test.py
+```
+
+You should see the extracted entities and their sentiment printed in the console.
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── baml_client/         # Auto-generated BAML Python client code
+├── baml_src/            # Your BAML source files and test script
+│   ├── market_sentiment.baml
+│   └── test.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 📝 Notes
+
+- If you update your `.baml` files, make sure to save them in VS Code to trigger client code regeneration.
+- Ensure your `GOOGLE_API_KEY` is set before running scripts that call Gemini models.
+- For troubleshooting, check that your Python version and all dependencies match those in `requirements.txt`.
+
+---
+
+## 🛠️ Troubleshooting
+
+- **ModuleNotFoundError:**  
+  Ensure you are running scripts from the project root or have the correct `PYTHONPATH`.
+- **BAML version mismatch:**  
+  Upgrade/downgrade `baml-py` to match the version specified in `generators.baml`.
+
+---
+
+## 📚 References
+
+- [BAML Documentation](https://docs.boundaryml.com/)
+- [Gemini API Quickstart](https://ai.google.dev/gemini-api/docs/quickstart)
