@@ -13,7 +13,8 @@ client<llm> CustomGPT4oMini {
   retry_policy Exponential
   options {
     model "gpt-4o-mini"
-    api_key env.OPENAI_API_KEY
+    api_key env.OPENAI_API_KEY,
+    base_url "https://api.openai.com"  // Ref: https://docs.boundaryml.com/ref/llm-client-providers/open-ai
   }
 }
 

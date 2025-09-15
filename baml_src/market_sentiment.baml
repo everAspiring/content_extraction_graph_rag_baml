@@ -1,6 +1,7 @@
 
 class MarketSentiment {
   company_name string @description("The name of the company. Company name should be either ltd, inc, corp, llc, plc, ag, gmbh, sa, nv, oyj, ab, as or s.a.")
+  company_ticker string @description("The stock ticker symbol of the company, if available.")
   sector string @description("The sector the company belongs to.")
   sentiment string @description("The sentiment of the market, e.g., Positive, Negative, Neutral.")
 }
