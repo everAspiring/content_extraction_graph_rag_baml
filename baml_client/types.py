@@ -41,49 +41,17 @@ def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
 # #########################################################################
 
 # #########################################################################
-# Generated classes (9)
+# Generated classes (2)
 # #########################################################################
-
-class CypherQuery(BaseModel):
-    query: str
-
-class Experience(BaseModel):
-    title: str
-    company: str
-    duration: str
-    description: str
-
-class FinalAnswer(BaseModel):
-    answer: str
 
 class MarketSentiment(BaseModel):
     company_name: str
+    company_ticker: str
     sector: str
     sentiment: str
 
 class MarketSentimentEntity(BaseModel):
     entities: typing.List["MarketSentiment"]
-
-class Person(BaseModel):
-    first: str
-    last: str
-    middle: typing.Optional[str] = None
-
-class PersonName(BaseModel):
-    first: typing.Optional[str] = None
-    last: typing.Optional[str] = None
-    middle: typing.Optional[str] = None
-
-class Resume(BaseModel):
-    name: "Person"
-    email: str
-    experience: typing.List["Experience"]
-    skills: typing.List["Skill"]
-    answer: typing.Optional[str] = None
-
-class Skill(BaseModel):
-    name: str
-    level: str
 
 # #########################################################################
 # Generated type aliases (0)

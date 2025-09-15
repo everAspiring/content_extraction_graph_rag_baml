@@ -53,6 +53,7 @@ class BamlSyncClient:
         client_registry: typing.Optional[baml_py.baml_py.ClientRegistry] = None,
         collector: typing.Optional[typing.Union[baml_py.baml_py.Collector, typing.List[baml_py.baml_py.Collector]]] = None,
         env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
+        on_tick: typing.Optional[typing.Callable[[str, baml_py.baml_py.FunctionLog], None]] = None,
     ) -> "BamlSyncClient":
         options: BamlCallOptions = {}
         if tb is not None:
@@ -63,6 +64,8 @@ class BamlSyncClient:
             options["collector"] = collector
         if env is not None:
             options["env"] = env
+        if on_tick is not None:
+            options["on_tick"] = on_tick
         return BamlSyncClient(self.__options.merge_options(options))
 
     @property
@@ -85,41 +88,20 @@ class BamlSyncClient:
     def parse_stream(self):
       return self.__llm_stream_parser
     
-    def ExtractPerson(self, record: str,
-        baml_options: BamlCallOptions = {},
-    ) -> types.PersonName:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ExtractPerson", args={
-            "record": record,
-        })
-        return typing.cast(types.PersonName, result.cast_to(types, types, stream_types, False, __runtime__))
-    def ExtractResume(self, resume: str,question: typing.Optional[str] = None,
-        baml_options: BamlCallOptions = {},
-    ) -> types.Resume:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ExtractResume", args={
-            "resume": resume,"question": question,
-        })
-        return typing.cast(types.Resume, result.cast_to(types, types, stream_types, False, __runtime__))
     def ExtractSentiment(self, article: str,
         baml_options: BamlCallOptions = {},
     ) -> types.MarketSentimentEntity:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ExtractSentiment", args={
-            "article": article,
-        })
-        return typing.cast(types.MarketSentimentEntity, result.cast_to(types, types, stream_types, False, __runtime__))
-    def GenerateCypher(self, question: str,
-        baml_options: BamlCallOptions = {},
-    ) -> types.CypherQuery:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="GenerateCypher", args={
-            "question": question,
-        })
-        return typing.cast(types.CypherQuery, result.cast_to(types, types, stream_types, False, __runtime__))
-    def SynthesizeAnswer(self, question: str,context: str,
-        baml_options: BamlCallOptions = {},
-    ) -> types.FinalAnswer:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="SynthesizeAnswer", args={
-            "question": question,"context": context,
-        })
-        return typing.cast(types.FinalAnswer, result.cast_to(types, types, stream_types, False, __runtime__))
+        # Check if on_tick is provided
+        if 'on_tick' in baml_options:
+            stream = self.stream.ExtractSentiment(article=article,
+                baml_options=baml_options)
+            return stream.get_final_response()
+        else:
+            # Original non-streaming code
+            result = self.__options.merge_options(baml_options).call_function_sync(function_name="ExtractSentiment", args={
+                "article": article,
+            })
+            return typing.cast(types.MarketSentimentEntity, result.cast_to(types, types, stream_types, False, __runtime__))
     
 
 
@@ -129,30 +111,6 @@ class BamlStreamClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ExtractPerson(self, record: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlSyncStream[stream_types.PersonName, types.PersonName]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ExtractPerson", args={
-            "record": record,
-        })
-        return baml_py.BamlSyncStream[stream_types.PersonName, types.PersonName](
-          result,
-          lambda x: typing.cast(stream_types.PersonName, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.PersonName, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
-        )
-    def ExtractResume(self, resume: str,question: typing.Optional[str] = None,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlSyncStream[stream_types.Resume, types.Resume]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ExtractResume", args={
-            "resume": resume,"question": question,
-        })
-        return baml_py.BamlSyncStream[stream_types.Resume, types.Resume](
-          result,
-          lambda x: typing.cast(stream_types.Resume, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.Resume, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
-        )
     def ExtractSentiment(self, article: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlSyncStream[stream_types.MarketSentimentEntity, types.MarketSentimentEntity]:
@@ -165,30 +123,6 @@ class BamlStreamClient:
           lambda x: typing.cast(types.MarketSentimentEntity, x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
-    def GenerateCypher(self, question: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlSyncStream[stream_types.CypherQuery, types.CypherQuery]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="GenerateCypher", args={
-            "question": question,
-        })
-        return baml_py.BamlSyncStream[stream_types.CypherQuery, types.CypherQuery](
-          result,
-          lambda x: typing.cast(stream_types.CypherQuery, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.CypherQuery, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
-        )
-    def SynthesizeAnswer(self, question: str,context: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlSyncStream[stream_types.FinalAnswer, types.FinalAnswer]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="SynthesizeAnswer", args={
-            "question": question,"context": context,
-        })
-        return baml_py.BamlSyncStream[stream_types.FinalAnswer, types.FinalAnswer](
-          result,
-          lambda x: typing.cast(stream_types.FinalAnswer, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.FinalAnswer, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
-        )
     
 
 class BamlHttpRequestClient:
@@ -197,39 +131,11 @@ class BamlHttpRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ExtractPerson(self, record: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractPerson", args={
-            "record": record,
-        }, mode="request")
-        return result
-    def ExtractResume(self, resume: str,question: typing.Optional[str] = None,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractResume", args={
-            "resume": resume,"question": question,
-        }, mode="request")
-        return result
     def ExtractSentiment(self, article: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
         result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractSentiment", args={
             "article": article,
-        }, mode="request")
-        return result
-    def GenerateCypher(self, question: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="GenerateCypher", args={
-            "question": question,
-        }, mode="request")
-        return result
-    def SynthesizeAnswer(self, question: str,context: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="SynthesizeAnswer", args={
-            "question": question,"context": context,
         }, mode="request")
         return result
     
@@ -240,39 +146,11 @@ class BamlHttpStreamRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ExtractPerson(self, record: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractPerson", args={
-            "record": record,
-        }, mode="stream")
-        return result
-    def ExtractResume(self, resume: str,question: typing.Optional[str] = None,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractResume", args={
-            "resume": resume,"question": question,
-        }, mode="stream")
-        return result
     def ExtractSentiment(self, article: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
         result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractSentiment", args={
             "article": article,
-        }, mode="stream")
-        return result
-    def GenerateCypher(self, question: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="GenerateCypher", args={
-            "question": question,
-        }, mode="stream")
-        return result
-    def SynthesizeAnswer(self, question: str,context: str,
-        baml_options: BamlCallOptions = {},
-    ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="SynthesizeAnswer", args={
-            "question": question,"context": context,
         }, mode="stream")
         return result
     

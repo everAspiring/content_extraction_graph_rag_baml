@@ -22,35 +22,11 @@ class LlmResponseParser:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ExtractPerson(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.PersonName:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractPerson", llm_response=llm_response, mode="request")
-        return typing.cast(types.PersonName, result)
-
-    def ExtractResume(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.Resume:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="request")
-        return typing.cast(types.Resume, result)
-
     def ExtractSentiment(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> types.MarketSentimentEntity:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractSentiment", llm_response=llm_response, mode="request")
         return typing.cast(types.MarketSentimentEntity, result)
-
-    def GenerateCypher(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.CypherQuery:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="GenerateCypher", llm_response=llm_response, mode="request")
-        return typing.cast(types.CypherQuery, result)
-
-    def SynthesizeAnswer(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.FinalAnswer:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="SynthesizeAnswer", llm_response=llm_response, mode="request")
-        return typing.cast(types.FinalAnswer, result)
 
     
 
@@ -60,34 +36,10 @@ class LlmStreamParser:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ExtractPerson(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.PersonName:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractPerson", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.PersonName, result)
-
-    def ExtractResume(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.Resume:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.Resume, result)
-
     def ExtractSentiment(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> stream_types.MarketSentimentEntity:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractSentiment", llm_response=llm_response, mode="stream")
         return typing.cast(stream_types.MarketSentimentEntity, result)
-
-    def GenerateCypher(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.CypherQuery:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="GenerateCypher", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.CypherQuery, result)
-
-    def SynthesizeAnswer(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.FinalAnswer:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="SynthesizeAnswer", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.FinalAnswer, result)
 
     

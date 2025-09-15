@@ -23,49 +23,17 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
 # #########################################################################
-# Generated classes (9)
+# Generated classes (2)
 # #########################################################################
-
-class CypherQuery(BaseModel):
-    query: typing.Optional[str] = None
-
-class Experience(BaseModel):
-    title: typing.Optional[str] = None
-    company: typing.Optional[str] = None
-    duration: typing.Optional[str] = None
-    description: typing.Optional[str] = None
-
-class FinalAnswer(BaseModel):
-    answer: typing.Optional[str] = None
 
 class MarketSentiment(BaseModel):
     company_name: typing.Optional[str] = None
+    company_ticker: typing.Optional[str] = None
     sector: typing.Optional[str] = None
     sentiment: typing.Optional[str] = None
 
 class MarketSentimentEntity(BaseModel):
     entities: typing.List["MarketSentiment"]
-
-class Person(BaseModel):
-    first: typing.Optional[str] = None
-    last: typing.Optional[str] = None
-    middle: typing.Optional[str] = None
-
-class PersonName(BaseModel):
-    first: typing.Optional[str] = None
-    last: typing.Optional[str] = None
-    middle: typing.Optional[str] = None
-
-class Resume(BaseModel):
-    name: typing.Optional["Person"] = None
-    email: typing.Optional[str] = None
-    experience: typing.List["Experience"]
-    skills: typing.List["Skill"]
-    answer: typing.Optional[str] = None
-
-class Skill(BaseModel):
-    name: typing.Optional[str] = None
-    level: typing.Optional[str] = None
 
 # #########################################################################
 # Generated type aliases (0)

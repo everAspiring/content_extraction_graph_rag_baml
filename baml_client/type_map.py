@@ -16,32 +16,11 @@ from . import stream_types
 
 type_map = {
 
-    "types.CypherQuery": types.CypherQuery,
-    "stream_types.CypherQuery": stream_types.CypherQuery,
-
-    "types.Experience": types.Experience,
-    "stream_types.Experience": stream_types.Experience,
-
-    "types.FinalAnswer": types.FinalAnswer,
-    "stream_types.FinalAnswer": stream_types.FinalAnswer,
-
     "types.MarketSentiment": types.MarketSentiment,
     "stream_types.MarketSentiment": stream_types.MarketSentiment,
 
     "types.MarketSentimentEntity": types.MarketSentimentEntity,
     "stream_types.MarketSentimentEntity": stream_types.MarketSentimentEntity,
-
-    "types.Person": types.Person,
-    "stream_types.Person": stream_types.Person,
-
-    "types.PersonName": types.PersonName,
-    "stream_types.PersonName": stream_types.PersonName,
-
-    "types.Resume": types.Resume,
-    "stream_types.Resume": stream_types.Resume,
-
-    "types.Skill": types.Skill,
-    "stream_types.Skill": stream_types.Skill,
 
 
 }
