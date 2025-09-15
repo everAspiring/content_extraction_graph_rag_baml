@@ -23,8 +23,8 @@ client<llm> CustomGemini2Flash {
   retry_policy Exponential
   options {
     model "gemini-2.0-flash"
-    api_key "AIzaSyC5gusO8hXwbP-fAFOJj2tD_favB3TL7R4"
-  }
+    api_key env.GOOGLE_API_KEY
+    }
 }
 
 client<llm> CustomSonnet {
